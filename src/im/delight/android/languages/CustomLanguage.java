@@ -23,6 +23,13 @@ import android.content.res.Resources;
 /** Helper methods for setting a custom language for the process your application is running in */
 public class CustomLanguage {
 	
+	protected static Locale mOriginalLocale;
+	
+	static {
+		// save the original default locale so that we can reference it later
+		mOriginalLocale = Locale.getDefault();
+	}
+	
 	/**
 	 * Updates the Locale for the current process (application) to the given language code
 	 * 
@@ -50,7 +57,7 @@ public class CustomLanguage {
 				// if the default language is requested (empty language code)
 				if (languageCode.equals("")) {
 					// set the new Locale instance to the default language
-					newLocale = Locale.getDefault();
+					newLocale = mOriginalLocale;
 				}
 				// if a custom language is requested (non-empty language code)
 				else {
@@ -68,11 +75,16 @@ public class CustomLanguage {
 					}
 				}
 				
-				// update the app's configuration to use the new Locale
-				final Resources resources = context.getBaseContext().getResources();
-				final android.content.res.Configuration conf = resources.getConfiguration();
-				conf.locale = newLocale;
-				resources.updateConfiguration(conf, resources.getDisplayMetrics());
+				if (newLocale != null) {
+					// update the app's configuration to use the new Locale
+					final Resources resources = context.getBaseContext().getResources();
+					final android.content.res.Configuration conf = resources.getConfiguration();
+					conf.locale = newLocale;
+					resources.updateConfiguration(conf, resources.getDisplayMetrics());
+					
+					// overwrite the default Locale
+					Locale.setDefault(newLocale);
+				}
 			}
 			catch (Exception e) { }
 		}
