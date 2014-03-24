@@ -15,14 +15,14 @@ Add the following code to your XML for the preferences. The class `LanguagePrefe
 Be sure to set `android:key` to the preference key that you want to store the language code in. For `android:title`, provide a value from your string resources, for example, which will be used as the preference's caption.
 
 ```
-	<im.delight.android.languages.LanguagePreference
-		android:key="language"
-		android:title="..."
-		android:enabled="true"
-		android:selectable="true" />
+<im.delight.android.languages.LanguagePreference
+	android:key="language"
+	android:title="..."
+	android:enabled="true"
+	android:selectable="true" />
 ```
 
-### Have your `Activity`s show up in the custom language
+### Have your app show up in the custom language
 
 In your `AndroidManifest.xml`, modify the `<application>` tag to include `android:name="com.my.package.App"`. Be sure to change this to your package name.
 
