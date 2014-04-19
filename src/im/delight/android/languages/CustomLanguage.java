@@ -89,5 +89,14 @@ public class CustomLanguage {
 			catch (Exception e) { }
 		}
 	}
+	
+	/**
+	 * Returns the original Locale instance that was in use before any custom selection may have been applied
+	 * 
+	 * @return the original Locale instance
+	 */
+	public static Locale getOriginalLocale() {
+		return mOriginalLocale;
+	}
 
 }
