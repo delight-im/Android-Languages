@@ -24,7 +24,7 @@ Be sure to set `android:key` to the preference key that you want to store the la
 
 ### Have your app show up in the custom language
 
-In your `AndroidManifest.xml`, modify the `<application>` tag to include `android:name="com.my.package.App"`. Be sure to change this to your package name.
+In your `AndroidManifest.xml`, modify the `<application>` tag to include `android:name="com.my.package.App"`. Be sure to change `com.my.package` to your package name.
 
 In the package that you specified there, create a new class `App` with the following content. Make sure to use the correct preference key in `prefs.getString(...)`, i.e. the one you also used in the preference XML above.
 
@@ -34,9 +34,15 @@ public class App extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		// ...
+		CustomLanguage.init(this, "language");
+	}
 
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		CustomLanguage.setLanguage(this, prefs.getString("language", ""));
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// ...
+		CustomLanguage.init(this, "language");
 	}
 
 }

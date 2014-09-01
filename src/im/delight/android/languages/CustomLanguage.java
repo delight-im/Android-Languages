@@ -16,6 +16,8 @@ package im.delight.android.languages;
  * limitations under the License.
  */
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import java.util.Locale;
 import android.content.ContextWrapper;
 import android.content.res.Resources;
@@ -29,7 +31,29 @@ public class CustomLanguage {
 		// save the original default locale so that we can reference it later
 		mOriginalLocale = Locale.getDefault();
 	}
-	
+
+	/**
+	 * Initializes the application with the custom language that is defined in the given preference
+	 * 
+	 * @param context the Application instance that you call this from
+	 * @param langPrefName the name of the string preference that contains the desired language's key
+	 */
+	public static void init(final ContextWrapper context, final String langPrefName) {
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		init(context, langPrefName, prefs);
+	}
+
+	/**
+	 * Initializes the application with the custom language that is defined in the given preference
+	 * 
+	 * @param context the Application instance that you call this from
+	 * @param langPrefName the name of the string preference that contains the desired language's key
+	 * @param prefs a SharedPreferences instance that should be re-used 
+	 */
+	public static void init(final ContextWrapper context, final String langPrefName, SharedPreferences prefs) {
+		CustomLanguage.setLanguage(context, prefs.getString(langPrefName, ""));
+	}
+
 	/**
 	 * Updates the Locale for the current process (application) to the given language code
 	 * 
