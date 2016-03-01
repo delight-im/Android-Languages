@@ -14,59 +14,87 @@ Custom language selection and access to language names for Android
 
 ### Custom language preference in your `PreferenceActivity`
 
-Add the following code to your XML for the preferences. The class `LanguagePreference` extends `ListPreference` and has the same appearance. It ignores the attributes `android:entries`, `android:entryValues`, `android:defaultValue` and `android:summary` because it comes with its own implementation for those.
+Add the following code to your preferences definitions in XML. The class `LanguagePreference` extends `ListPreference` and has the same appearance. It ignores the attributes `android:entries`, `android:entryValues`, `android:defaultValue` and `android:summary` because it comes with its own implementation for those.
 
-Be sure to set `android:key` to the preference key that you want to store the language code in. For `android:title`, provide a value from your string resources, for example, which will be used as the preference's caption.
+Be sure to set `android:key` to the preference key that you want to store the language code in. For `android:title`, provide a value from your string resources, which will be used as the preference's caption.
 
-```
+```xml
 <im.delight.android.languages.LanguagePreference
-	android:key="language"
-	android:title="..."
+	android:key="myPreferenceKey"
+	android:title="@string/myPreferenceTitle"
 	android:enabled="true"
 	android:selectable="true" />
 ```
 
-### Have your app show up in the custom language
+### Extend the `Application` class
 
 In your `AndroidManifest.xml`, modify the `<application>` tag to include `android:name="com.my.package.App"`. Be sure to change `com.my.package` to your package name.
 
-In the package that you specified there, create a new class `App` with the following content. Make sure to use the correct preference key in `prefs.getString(...)`, i.e. the one you also used in the preference XML above.
+In the package that you specified there, create a new class `App` that extends `Application`:
 
+```java
+public class App extends Application { }
 ```
+
+### Have your app show up in the custom language
+
+Always make sure two include the correct preference key for the language setting instead of `myPreferenceKey`.
+
+Modify your `Application` subclass as follows:
+
+```java
 public class App extends Application {
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		// ...
-		CustomLanguage.init(this, "language");
+
+		Language.setFromPreference(this, "myPreferenceKey");
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		// ...
-		CustomLanguage.init(this, "language");
+
+		Language.setFromPreference(this, "myPreferenceKey");
 	}
 
 }
 ```
 
-In your `PreferenceActivity`, override `onPause()` like this (use the correct preference key again):
+In your `PreferenceFragment` or `PreferenceActivity` subclass that contains the language preference, override `onPause` as follows:
 
-```
+```java
 @Override
 protected void onPause() {
+	Language.setFromPreference(this, "myPreferenceKey", true);
+
 	super.onPause();
-	
-	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-	CustomLanguage.setLanguage(this, prefs.getString("language", ""), true);
+}
+```
+
+## Setting the default option's label
+
+Optionally, you may set a localized label for the default option. The default is `Standard (recommended)`.
+
+To change the label, go to your `PreferenceFragment` or `PreferenceActivity` subclass that contains the language preference. Modify `onCreate` as follows:
+
+```java
+@Override
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+
+	LanguageList.setStandardOptionLabel(getString(R.string.default_locale));
 }
 ```
 
 ### Access to the language names and keys
 
-While you don't need this, usually, you may retrieve a string array containing the list of languages. Use `LanguageList.getHumanReadable(...)` for the human-readable names and `LanguageList.getMachineReadable(...)` for the machine-readable codes.
+Optionally, you may retrieve a string array containing the list of all languages, when needed. Call `LanguageList.getHumanReadable` for the human-readable names and `LanguageList.getMachineReadable` for the machine-readable codes.
+
+## Contributing
+
+All contributions are welcome! If you wish to contribute, please create an issue first so that your feature, problem or question can be discussed.
 
 ## License
 
