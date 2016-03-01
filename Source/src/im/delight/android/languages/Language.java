@@ -23,7 +23,7 @@ import android.content.ContextWrapper;
 import android.content.res.Resources;
 
 /** Helper methods for setting a custom language for the process your application is running in */
-public class CustomLanguage {
+public class Language {
 
 	protected static Locale mOriginalLocale;
 
