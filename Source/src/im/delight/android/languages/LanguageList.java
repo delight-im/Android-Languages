@@ -22,8 +22,8 @@ import android.util.Base64;
 public class LanguageList {
 
 	private static final String CHARSET_DEFAULT = "UTF-8";
-	private static final String DEFAULT_LANGUAGE_LABEL_DEFAULT = "Standard (recommended)";
-	private static String sDefaultLanguageLabel = DEFAULT_LANGUAGE_LABEL_DEFAULT;
+	private static final String STANDARD_OPTION_LABEL_DEFAULT = "Standard (recommended)";
+	private static String sStandardOptionLabel = STANDARD_OPTION_LABEL_DEFAULT;
 	private static final String[] HUMAN_RAW = {
 		null,
 		"QWZyaWthYW5zIChBZnJpa2FhbnMp",
@@ -228,8 +228,6 @@ public class LanguageList {
 		if (mHuman == null) {
 			mHuman = new String[HUMAN_RAW.length];
 
-			mHuman[0] = getDefaultLanguageLabel();
-
 			for (int i = 1; i < mHuman.length; i++) {
 				try {
 					mHuman[i] = decodeBase64(HUMAN_RAW[i]);
@@ -240,6 +238,9 @@ public class LanguageList {
 			}
 		}
 
+		// update the label for the default option with the supplied string
+		mHuman[0] = getStandardOptionLabel();
+
 		return mHuman;
 	}
 
@@ -247,12 +248,12 @@ public class LanguageList {
 		return MACHINE;
 	}
 
-	public static String getDefaultLanguageLabel() {
-		return sDefaultLanguageLabel;
+	public static String getStandardOptionLabel() {
+		return sStandardOptionLabel;
 	}
 
-	public static void setDefaultLanguageLabel(final String label) {
-		sDefaultLanguageLabel = label;
+	public static void setStandardOptionLabel(final String label) {
+		sStandardOptionLabel = label;
 	}
 
 	private static String decodeBase64(final String base64) throws IllegalArgumentException, UnsupportedEncodingException {
