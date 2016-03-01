@@ -16,13 +16,14 @@ package im.delight.android.languages;
  * limitations under the License.
  */
 
-import java.util.Locale;
 import java.io.UnsupportedEncodingException;
 import android.util.Base64;
 
 public class LanguageList {
 
 	private static final String CHARSET_DEFAULT = "UTF-8";
+	private static final String DEFAULT_LANGUAGE_LABEL_DEFAULT = "Standard (recommended)";
+	private static String sDefaultLanguageLabel = DEFAULT_LANGUAGE_LABEL_DEFAULT;
 	private static final String[] HUMAN_RAW = {
 		null,
 		"QWZyaWthYW5zIChBZnJpa2FhbnMp",
@@ -227,7 +228,7 @@ public class LanguageList {
 		if (mHuman == null) {
 			mHuman = new String[HUMAN_RAW.length];
 
-			mHuman[0] = getDefaultLabel();
+			mHuman[0] = getDefaultLanguageLabel();
 
 			for (int i = 1; i < mHuman.length; i++) {
 				try {
@@ -246,18 +247,17 @@ public class LanguageList {
 		return MACHINE;
 	}
 
-	private static String getDefaultLabel() {
-		final String languageIso3 = Locale.getDefault().getISO3Language();
+	public static String getDefaultLanguageLabel() {
+		return sDefaultLanguageLabel;
+	}
 
-		if (languageIso3.equals("spa")) return "Estándar (recomendado)";
-		else if (languageIso3.equals("por")) return "Padrão (recomendado)";
-		else if (languageIso3.equals("deu")) return "Standard (empfohlen)";
-		else if (languageIso3.equals("fra")) return "Standard (recommandée)";
-		else return "Standard (recommended)";
+	public static void setDefaultLanguageLabel(final String label) {
+		sDefaultLanguageLabel = label;
 	}
 
 	private static String decodeBase64(final String base64) throws IllegalArgumentException, UnsupportedEncodingException {
 		final byte[] bytes = Base64.decode(base64, Base64.DEFAULT);
+
 		return new String(bytes, CHARSET_DEFAULT);
 	}
 
