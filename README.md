@@ -2,6 +2,10 @@
 
 Custom language selection and access to language names for Android
 
+## Requirements
+
+ * Android 2.2+
+
 ## Installation
 
  * Include one of the [JARs](JARs) in your `libs` folder
