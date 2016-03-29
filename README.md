@@ -20,10 +20,10 @@ Be sure to set `android:key` to the preference key that you want to store the la
 
 ```xml
 <im.delight.android.languages.LanguagePreference
-	android:key="myPreferenceKey"
-	android:title="@string/myPreferenceTitle"
-	android:enabled="true"
-	android:selectable="true" />
+    android:key="myPreferenceKey"
+    android:title="@string/myPreferenceTitle"
+    android:enabled="true"
+    android:selectable="true" />
 ```
 
 ### Extend the `Application` class
@@ -45,19 +45,19 @@ Modify your `Application` subclass as follows:
 ```java
 public class App extends Application {
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-		Language.setFromPreference(this, "myPreferenceKey");
-	}
+        Language.setFromPreference(this, "myPreferenceKey");
+    }
 
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
-		Language.setFromPreference(this, "myPreferenceKey");
-	}
+        Language.setFromPreference(this, "myPreferenceKey");
+    }
 
 }
 ```
@@ -67,9 +67,9 @@ In your `PreferenceFragment` or `PreferenceActivity` subclass that contains the 
 ```java
 @Override
 protected void onPause() {
-	Language.setFromPreference(this, "myPreferenceKey", true);
+    Language.setFromPreference(this, "myPreferenceKey", true);
 
-	super.onPause();
+    super.onPause();
 }
 ```
 
@@ -82,9 +82,9 @@ To change the label, go to your `PreferenceFragment` or `PreferenceActivity` sub
 ```java
 @Override
 public void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
+    super.onCreate(savedInstanceState);
 
-	LanguageList.setStandardOptionLabel(getString(R.string.default_locale));
+    LanguageList.setStandardOptionLabel(getString(R.string.default_locale));
 }
 ```
 
