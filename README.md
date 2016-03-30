@@ -23,7 +23,7 @@ Custom language selection and access to language names for Android
 
      ```gradle
      dependencies {
-         compile 'com.github.delight-im:Android-Languages:v1.0.0'
+         compile 'com.github.delight-im:Android-Languages:v1.0.1'
      }
      ```
 
