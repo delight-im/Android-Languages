@@ -117,6 +117,7 @@ public class Language {
 					final Resources resources = context.getBaseContext().getResources();
 					final android.content.res.Configuration conf = resources.getConfiguration();
 					conf.locale = newLocale;
+					conf.setLayoutDirection(conf.locale);
 					resources.updateConfiguration(conf, resources.getDisplayMetrics());
 
 					// overwrite the default Locale
