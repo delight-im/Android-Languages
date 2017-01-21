@@ -18,6 +18,7 @@ package im.delight.android.languages;
 
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import java.util.Locale;
 import android.content.ContextWrapper;
@@ -119,6 +120,11 @@ public class Language {
 					final Configuration conf = resources.getConfiguration();
 
 					conf.locale = newLocale;
+
+					if (Build.VERSION.SDK_INT >= 17) {
+						conf.setLayoutDirection(conf.locale);
+					}
+
 					resources.updateConfiguration(conf, resources.getDisplayMetrics());
 
 					// overwrite the default Locale
