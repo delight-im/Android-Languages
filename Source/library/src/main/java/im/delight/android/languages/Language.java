@@ -17,6 +17,7 @@ package im.delight.android.languages;
  */
 
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import java.util.Locale;
 import android.content.ContextWrapper;
@@ -115,7 +116,8 @@ public class Language {
 				if (newLocale != null) {
 					// update the app's configuration to use the new Locale
 					final Resources resources = context.getBaseContext().getResources();
-					final android.content.res.Configuration conf = resources.getConfiguration();
+					final Configuration conf = resources.getConfiguration();
+
 					conf.locale = newLocale;
 					resources.updateConfiguration(conf, resources.getDisplayMetrics());
 
