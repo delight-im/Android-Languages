@@ -119,6 +119,7 @@ public class Language {
 					final Configuration conf = resources.getConfiguration();
 
 					conf.locale = newLocale;
+					conf.setLayoutDirection(conf.locale);
 					resources.updateConfiguration(conf, resources.getDisplayMetrics());
 
 					// overwrite the default Locale
